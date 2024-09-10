@@ -34,6 +34,7 @@
         "updated_at": "2024-09-07T10:00:00Z"
     }
 }
+```
 
 失敗時のレスポンス:
 ```json
@@ -129,7 +130,6 @@
 - リクエスト形式: `DELETE /books/{id}`
 - 成功時のレスポンス:
 ```json
-コードをコピーする
 {
     "message": "Book successfully removed!"
 }
