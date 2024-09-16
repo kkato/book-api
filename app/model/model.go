@@ -64,17 +64,17 @@ func GetBooks() (books []Book) {
 		}
 		books = append(books, book)
 	}
-	return
+	return books
 }
 
-func GetBook(id int) (book Book) {
+func GetBook(id string) (book Book) {
 	cmd := "SELECT * FROM books WHERE id = ?"
 	rows := Db.QueryRow(cmd, id)
 	err = rows.Scan(&book.ID, &book.Title, &book.Author, &book.PublicationYear, &book.Genre, &book.Price, &book.CreatedAt, &book.UpdatedAt)
 	if err != nil {
 		log.Fatalln(err)
 	}
-	return
+	return book
 }
 
 func CreateBook(title string, author string, publicationYear int, genre string, price int) (id string) {
@@ -86,18 +86,20 @@ func CreateBook(title string, author string, publicationYear int, genre string, 
 	return id
 }
 
-func UpdateBook(id int, title string, author string, publicationYear int, genre string, price int) {
+func UpdateBook(id int, title string, author string, publicationYear int, genre string, price int) (err error) {
 	cmd := "UPDATE books SET title = ?, author = ?, publication_year = ?, genre = ?, price = ?, updated_at = datetime('now') WHERE id = ?"
 	_, err = Db.Exec(cmd, title, author, publicationYear, genre, price, id)
 	if err != nil {
 		log.Fatalln(err)
 	}
+	return err
 }
 
-func DeleteBook(id int) {
+func DeleteBook(id string) (err error) {
 	cmd := "DELETE FROM books WHERE id = ?"
 	_, err = Db.Exec(cmd, id)
 	if err != nil {
 		log.Fatalln(err)
 	}
+	return err
 }
