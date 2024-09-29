@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/kkato/book-api/config"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type Book struct {
@@ -34,18 +35,32 @@ func init() {
 		log.Fatalln(err)
 	}
 
-	cmd := `CREATE TABLE IF NOT EXISTS books(
+	createTableSQL := `CREATE TABLE IF NOT EXISTS books(
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		title STRING,
-		author STRING,
-		publication_year INTEGER,
-		genre STRING,
-		price INTEGER,
-		created_at DATETIME,
-		updated_at DATETIME
+		title STRING NOT NULL,
+		author STRING NOT NULL,
+		publication_year INTEGER NOT NULL,
+		genre STRING NOT NULL,
+		price INTEGER NOT NULL,
+		created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 	)`
-	_, err = Db.Exec(cmd)
+	_, err = Db.Exec(createTableSQL)
 
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	insertSQL1 := `INSERT INTO books (title, author, publication_year, genre, price)
+		VALUES ('Go Programming', 'John Doe', '2022', 'Programming', 3500)`
+	_, err = Db.Exec(insertSQL1)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	insertSQL2 := `INSERT INTO books (title, author, publication_year, genre, price)
+		VALUES ('Introduction to Kubernetes', 'Jane Smith', '2021', 'Technology', 4000)`
+	_, err = Db.Exec(insertSQL2)
 	if err != nil {
 		log.Fatalln(err)
 	}
