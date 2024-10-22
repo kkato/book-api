@@ -2,7 +2,7 @@
 
 An API for managing books.
 
-## エンドポイント
+## Endpoints
 - `POST /books` -> Create a new book
 - `GET /books` -> Return a list of all books
 - `GET /books/{id}` -> Return details of a specific book
@@ -11,7 +11,7 @@ An API for managing books.
 - All responses are returned in JSON format.
 - The HTTP response status code for successful requests is 200, and requests to non-existent endpoints return 404.
 
-## エンドポイント詳細
+## Endpoint Details
 
 ### `POST /books`Endpoint
 Create a new book.
