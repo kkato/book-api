@@ -1,24 +1,25 @@
 # book-api
-書籍管理のためのAPIを作成する。
+
+An API for managing books.
 
 ## エンドポイント
-- `POST /books` -> 書籍を作成
-- `GET /books` -> 全書籍の一覧を返す
-- `GET /books/{id}` -> 指定した書籍を1つ返す
-- `PATCH /books/{id}` -> 指定した書籍を更新
-- `DELETE /books/{id}` -> 指定した書籍を削除
-- レスポンスはすべてJSON形式で返す。
-- エンドポイントに対するHTTPレスポンスステータスコードは、成功時に`200`を返し、存在しないエンドポイントへのリクエストには`404`を返す。
+- `POST /books` -> Create a new book
+- `GET /books` -> Return a list of all books
+- `GET /books/{id}` -> Return details of a specific book
+- `PATCH /books/{id}` -> Update a specific book
+- `DELETE /books/{id}` -> Delete a specific book
+- All responses are returned in JSON format.
+- The HTTP response status code for successful requests is 200, and requests to non-existent endpoints return 404.
 
 ## エンドポイント詳細
 
-### `POST /books`エンドポイント
-書籍を新規作成する。
+### `POST /books`Endpoint
+Create a new book.
 
-- リクエスト形式
-  - 必須フィールド: `title`, `author`, `publication_year`, `genre`, `price`
+- Request format:
+  - Required fields: `title`, `author`, `publication_year`, `genre`, `price`
 
-- 成功時のレスポンス:
+- Success response:
 ```json
 {
     "message": "Book successfully created!",
@@ -35,7 +36,7 @@
 }
 ```
 
-失敗時のレスポンス:
+- Failure response:
 ```json
 {
     "message": "Book creation failed",
@@ -43,12 +44,12 @@
 }
 ```
 
-### `GET /books`エンドポイント
+### `GET /books`Endpoint
 
-すべての書籍を返す。
+Returns a list of all books.
 
-- リクエスト形式: `GET /books/`
-- レスポンス形式
+- Request format: `GET /books/`
+- Response format:
 ```json
 {
     "books": [
@@ -73,12 +74,12 @@
 ```
 
 
-### `GET /books/{id}`エンドポイント
+### `GET /books/{id}`Endpoint
 
-指定したidの書籍を返す。
+Returns the details of the book with the specified id.
 
-- リクエスト形式: `GET /books/{id}`
-- レスポンス形式:
+- Request format: `GET /books/{id}`
+- Response format:
 ```json
 {
     "message": "Book details by id",
@@ -93,13 +94,13 @@
 }
 ```
 
-### `PATCH /books/{id}`エンドポイント
+### `PATCH /books/{id}`Endpoint
 
-指定したidの書籍を更新し、更新された書籍を返す。
+Updates the book with the specified id and returns the updated book.
 
-- リクエスト形式: PATCH /books/{id}
-  - フィールド: `title`, `author`, `publication_year`, `genre`, `price` のいずれか
-- 成功時のレスポンス:
+- Request format: PATCH /books/{id}
+  - Fields: One or more of `title`, `author`, `publication_year`, `genre`, `price`
+- Success response:
 ```json
 {
     "message": "Book successfully updated!",
@@ -114,7 +115,7 @@
 }
 ```
 
-- 失敗時のレスポンス:
+- Failure response:
 ```json
 {
     "message": "Book update failed",
@@ -122,27 +123,21 @@
 }
 ```
 
-### `DELETE /books/{id}`エンドポイント
+### `DELETE /books/{id}`Endpoint
 
-指定したidの書籍を削除する。
+Deletes the book with the specified id.
 
-- リクエスト形式: `DELETE /books/{id}`
-- 成功時のレスポンス:
+- Request format: `DELETE /books/{id}`
+- Success response:
 ```json
 {
     "message": "Book successfully removed!"
 }
 ```
 
-- 失敗時のレスポンス:
+- Failure response:
 ```json
 {
     "message": "No book found"
 }
 ```
-
-
-
-
-
-
