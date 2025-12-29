@@ -1,62 +1,62 @@
 # Book API
 
-A simple REST API for managing books, built with Go's standard library.
+書籍を管理するシンプルなREST APIです。Go標準ライブラリのみで実装されています。
 
-## Features
+## 機能
 
-- CRUD operations for books
-- In-memory storage
-- No external dependencies
+- 書籍のCRUD操作
+- インメモリストレージ
+- 外部依存なし
 
-## Getting Started
+## 起動方法
 
 ```bash
-# Run the server
+# サーバーを起動
 go run main.go
 ```
 
-The server will start on `http://localhost:8080`
+サーバーは `http://localhost:8080` で起動します。
 
-## API Endpoints
+## APIエンドポイント
 
-| Method | Endpoint | Description |
+| メソッド | エンドポイント | 説明 |
 |--------|----------|-------------|
-| GET | `/books` | List all books |
-| POST | `/books` | Create a new book |
-| GET | `/books/{id}` | Get a book by ID |
-| PUT | `/books/{id}` | Update a book |
-| DELETE | `/books/{id}` | Delete a book |
+| GET | `/books` | すべての書籍を取得 |
+| POST | `/books` | 新しい書籍を作成 |
+| GET | `/books/{id}` | IDで書籍を取得 |
+| PUT | `/books/{id}` | 書籍を更新 |
+| DELETE | `/books/{id}` | 書籍を削除 |
 
-## Example
+## 使用例
 
 ```bash
-# Create a book
+# 書籍を作成
 curl -X POST http://localhost:8080/books \
   -H "Content-Type: application/json" \
   -d '{
     "id": "1",
-    "title": "The Go Programming Language",
+    "title": "プログラミング言語Go",
     "author": "Alan Donovan",
     "isbn": "978-0134190440",
     "published_at": "2015-10-26T00:00:00Z"
   }'
 
-# Get all books
+# すべての書籍を取得
 curl http://localhost:8080/books
 
-# Get a specific book
+# 特定の書籍を取得
 curl http://localhost:8080/books/1
 
-# Update a book
+# 書籍を更新
 curl -X PUT http://localhost:8080/books/1 \
   -H "Content-Type: application/json" \
   -d '{
-    "title": "The Go Programming Language (Updated)",
+    "title": "プログラミング言語Go（改訂版）",
     "author": "Alan Donovan & Brian Kernighan",
     "isbn": "978-0134190440",
     "published_at": "2015-10-26T00:00:00Z"
   }'
 
-# Delete a book
+# 書籍を削除
 curl -X DELETE http://localhost:8080/books/1
 ```
