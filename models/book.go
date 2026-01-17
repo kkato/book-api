@@ -21,6 +21,11 @@ type BookStore struct {
 	books map[string]*Book
 }
 
+var (
+	ErrBookExists   = errors.New("book with this ID already exists")
+	ErrBookNotFound = errors.New("book not found")
+)
+
 func NewBookStore() *BookStore {
 	return &BookStore{
 		books: make(map[string]*Book),
@@ -32,7 +37,7 @@ func (s *BookStore) Create(book *Book) error {
 	defer s.mu.Unlock()
 
 	if _, exists := s.books[book.ID]; exists {
-		return errors.New("book with this ID already exists")
+		return ErrBookExists
 	}
 
 	now := time.Now()
@@ -48,7 +53,8 @@ func (s *BookStore) GetAll() []*Book {
 
 	books := make([]*Book, 0, len(s.books))
 	for _, book := range s.books {
-		books = append(books, book)
+		copy := *book
+		books = append(books, &copy)
 	}
 	return books
 }
@@ -59,26 +65,24 @@ func (s *BookStore) GetByID(id string) (*Book, error) {
 
 	book, exists := s.books[id]
 	if !exists {
-		return nil, errors.New("book not found")
+		return nil, ErrBookNotFound
 	}
-	return book, nil
+	copy := *book
+	return &copy, nil
 }
 
 func (s *BookStore) Update(id string, book *Book) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	if _, exists := s.books[id]; !exists {
-		return errors.New("book not found")
+	existing, exists := s.books[id]
+	if !exists {
+		return ErrBookNotFound
 	}
 
 	book.ID = id
 	book.UpdatedAt = time.Now()
-	if s.books[id].CreatedAt.IsZero() {
-		book.CreatedAt = time.Now()
-	} else {
-		book.CreatedAt = s.books[id].CreatedAt
-	}
+	book.CreatedAt = existing.CreatedAt
 	s.books[id] = book
 	return nil
 }
@@ -88,7 +92,7 @@ func (s *BookStore) Delete(id string) error {
 	defer s.mu.Unlock()
 
 	if _, exists := s.books[id]; !exists {
-		return errors.New("book not found")
+		return ErrBookNotFound
 	}
 
 	delete(s.books, id)
