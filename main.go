@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	db, err := database.New("book.db")
+	db, err := database.New()
 	if err != nil {
 		log.Fatal(err)
 	}

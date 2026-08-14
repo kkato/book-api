@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS books (
 	updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 )`
 
-func New(dataSourceName string) (*sql.DB, error) {
-	db, err := sql.Open("sqlite", dataSourceName)
+func New() (*sql.DB, error) {
+	db, err := sql.Open("sqlite", "book.db")
 	if err != nil {
 		return nil, err
 	}
