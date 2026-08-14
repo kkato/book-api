@@ -19,7 +19,6 @@
 curl -X POST http://localhost:8080/books \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "1",
     "title": "プログラミング言語Go",
     "author": "Alan Donovan",
     "isbn": "978-0134190440",
